@@ -1,0 +1,16 @@
+service: api-aws-tata-star-wars
+frameworkVersion: "1.54.0"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  profile: tata-aws
+
+functions:
+  app:
+    handler: handler.app
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
