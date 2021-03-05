@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const autoIncrement = require('mongodb-autoincrement');
 
 const mongoDbName = 'tatadb';
 
@@ -30,4 +31,15 @@ module.exports.connectToDatabase = async () => {
         console.log("Mongo connection error");
         console.log(error);
     });
+}
+
+module.exports.getNextSequence = (db, collectionName) => {
+    return new Promise((resolve, reject) => {
+        autoIncrement.getNextSequence(db, collectionName, (err, autoIndex) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(autoIndex);
+        });
+    })
 }
